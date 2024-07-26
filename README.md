@@ -1,24 +1,39 @@
 # 航空公園コート予約システム
 
-航空公園のコートを予約作業を自動化するプログラムです。
+航空公園のコートを予約作業を自動化するプログラムです。Windowsで使うことを想定しています。
 
 ## 機能
 1. 他の人の投票数を一覧にする
-2. 抽選の投票を自動化
-3. 投票の確定作業を自動化
+2. 自動で抽選の投票をする
+3. 自動で投票の確定作業をする
 
-## 使い方
-セットアップ：
-1. コマンドプロンプトにnpmをインストール
-https://qiita.com/gahoh/items/8444da99a1f93b6493b4
-2. コマンドプロンプトにgitをインストール
-https://qiita.com/T-H9703EnAc/items/4fbe6593d42f9a844b1c
-<br>↑これは手順2まで
-3. コマンドプロンプトを開き、以下のコマンドを実行
- ```console
-git clone https://github.com/yukiobata1/res_Tokorozawa/
-cd res_Tokorozawa
-npm install 
-```
+## 初期化の手順
+1. リンクを参考に、コマンドプロンプトにnpmをインストール
+   https://qiita.com/gahoh/items/8444da99a1f93b6493b4
+3. コマンドプロンプトにgitをインストール(手順2まで)<br>
+   https://qiita.com/T-H9703EnAc/items/4fbe6593d42f9a844b1c
+4. コマンドプロンプトを開き、以下のコマンドを実行
+   ```console
+   git clone https://github.com/yukiobata1/res_Tokorozawa/
+   cd res_Tokorozawa
+   npm install
+   ```
+## 各機能の使い方
 以下の作業はコマンドプロンプトを開いて、`cd res_Tokorozawa`としてから実行してください。
-1. 他の人の投票数を一覧にする
+結果は、ローカルディスク>ユーザー>{ユーザー名}>res_Tokorozawaフォルダの中に出力されます。ピン止めしておくとわかりやすいです。<br>
+
+### 他の人の投票数を一覧にする<br>
+1. `node getDraft.mjs`を実行。
+2. 30分程度で、`YYYY-MM`(2024-08など)というフォーマットのフォルダの中に'下書き.xlsx'が出力されます。
+3. この中に投票数が書き込まれています。
+### 自動で抽選の投票をする<br>
+1. フォルダで、まず下書き.xlsxをコピーする
+2. コピーされたファイルのセルの値を、投票する票数に書き換える
+3. 投票先一覧.xlsxという名前に変更して、下書き.xlsxと同じフォルダ内に保存する
+4. コマンドプロンプトに移動し、`nohup node vote.mjs &`を実行する
+5. 8時間くらいで結果が出ます。`YYYY-MM`フォルダの中に、voteRecord.txtが出力されます。各エントリの"done"が投票されたかに対応します。
+
+注意点: 
+- パソコンの電源を切ると処理が中断されてしまうので、スリープしない設定にしてつけっぱなしにしておいてください。
+- 中断された際は、voteRecord.txtに実行状況が記録されているので、再度`nohup node vote.mjs &`を実行すればよいです。
+- voteRecord.txtは手で編集しないでください。
