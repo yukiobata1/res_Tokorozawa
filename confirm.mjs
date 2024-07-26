@@ -1,11 +1,7 @@
 import puppeteer from "puppeteer";
 
-import ExcelJS from "exceljs";
-import { mkdir, access } from "fs/promises";
-import { constants } from "fs";
 import { join } from "path";
 import { fileURLToPath } from "url";
-import path from "path";
 import {
   convertExcelToJson,
   readConfirmDoneList,
@@ -14,8 +10,6 @@ import {
   readCourtTakenList,
   courtTakenListSave,
 } from "./utils.mjs";
-import xlsx from "xlsx";
-import fs from "fs";
 
 const delay = (ms) => {
   return new Promise((resolve) => setTimeout(resolve, ms));
